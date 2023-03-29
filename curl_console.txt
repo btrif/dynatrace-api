@@ -1,0 +1,12 @@
+https://gss19887.live.dynatrace.com/rest-api-doc/index.jsp?urls.primaryName=Configuration%20API#/Management%20zones/listManagementZones
+
+
+(dynatrace-venv) D:\workspace\btrif\dynatrace-api>curl -X GET https://gss19887.live.dynatrace.com/api/config/v1/managementZones -H "accept: application/json; charset=utf
+-8" -H "Authorization: Api-Token dt0c01.T5BGH4MKXOCI4GQYDQ5FHZ4V.3USYP4PMKOC5NKPWFOCGBB2OYXTFKUGPPWOUM3D3WQSIGZSKSXARJ63GOIIHUXCG"
+{"values":[]}
+
+
+(dynatrace-venv) D:\workspace\btrif\dynatrace-api>curl -X GET https://gss19887.live.dynatrace.com/api/config/v1/managementZones -H "accept: application/json; charset=utf
+-8" -H "Authorization: Api-Token dt0c01.T5BGH4MKXOCI4GQYDQ5FHZ4V.3USYP4PMKOC5NKPWFOCGBB2OYXTFKUGPPWOUM3D3WQSIGZSKSXARJ63GOIIHUXCG"
+{"values":[{"id":"-5914000214989127995","name":"lunii4-home","description":"calculatoarele de pe Lunii nr 4"}]}
+
