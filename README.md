@@ -7,15 +7,20 @@
 ### 1. Clone locally the remote repo from Github:
 ```
    git clone git@github.com:btrif/dynatrace-api.git
-
 ```
-### 2. Install requirements:
+
+### 2. Create locally a virtual python environment
+```
+python -m venv dynatrace_api_venv
+```
+
+### 3. Install requirements:
 
 ```
 pip install -r requirements.txt
 ```
  
-### 3. Create a file .secrets.json into the root folder with the following data:
+### 4. Create a file .secrets.json into the root folder with the following data:
 ```   
 .secrets.json
 
@@ -38,12 +43,12 @@ Observation: Token comes in the form :
 Without these proper settings you cannot interact with the DynaTrace API.
 
 
-### 4.  teams.yml file
+### 5.  teams.yml file
 
 If you have a new teams.yml file you replace the existing one into the root folder.
 
 
-### 5. Run the application
+### 6. Run the application
 <b>main.py</b> is the main executor of the entire (small) app.
 It uses requests to GET, POST, UPDATE management zones.
 
