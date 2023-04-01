@@ -57,9 +57,10 @@ if __name__ == '__main__':
         "entitySelectorBasedRules": []
         }
 
+
     zone_data2 = {
-        "name": "manual_entry_2",
-        "description": "31.032023 20:09",
+        "name": "manual_entry_9",
+        "description": "01.042023 14:39",
         "rules": [
             {
                 "type": "SERVICE",
@@ -87,23 +88,31 @@ if __name__ == '__main__':
 
     headers = {'content-type': 'application/json'}
 
-    print('\nPOST request:')
-    post_request_result = requests.post(
-            url=zone_url,
-            params=params,
-            data=json.dumps(zone_data2),
-            headers=headers
-            )
-
-    print(post_request_result.json())
-
-    # print('\nUPDATE request:')
-    # put_request = requests.put(
+    # print('\nPOST request:')
+    # post_request_result = requests.post(
     #         url=zone_url,
     #         params=params,
-    #         data=json.dumps(mngmt_data),
+    #         data=json.dumps(zone_data2),
     #         headers=headers
     #         )
+    #
+    # print(post_request_result.json())
+
+    ID="1781855667665253367"
+    zone_update_url = "https://"+ENVIRONMENT_ID+".live.dynatrace.com/api/config/v1/managementZones/"+ID
+    print(f"zone_update_url : {zone_update_url}")
+
+    print('\nUPDATE request:')
+    try :
+        put_request_result = requests.put(
+                url=zone_update_url,
+                params=params,
+                data=json.dumps(zone_data2),
+                headers=headers
+                )
+        print(f"put_request_result: \n {put_request_result}")
+    except Exception :
+        print('EXCEPTION !')
 
 
 

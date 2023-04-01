@@ -15,13 +15,14 @@ def yaml_to_json_file(yaml_file, json_file):
 
 
 def json_to_yaml_file(json_file, yaml_file):
-
     with open(json_file, 'r') as json_in, open(yaml_file, "w") as yaml_out:
         json_obj = json.load(json_in)
         yaml_obj = yaml.dump(json_obj, yaml_out)
     print('\nYAML file: ')
     with open(yaml_file, 'r') as result_file:
         print(result_file.read())
+
+
 
 def load_json_file(json_file):
     with open(json_file, 'r') as json_in :
