@@ -3,10 +3,6 @@
 import requests
 import json
 import asyncio
-
-from datetime import datetime, timedelta
-import os
-
 from settings import ENVIRONMENT_ID, API_TOKEN
 
 

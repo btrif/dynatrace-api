@@ -1,6 +1,6 @@
 #  Created by btrif Trif on 29-03-2023 , 12:35 PM.
 
-
+from typing import Generator
 import json
 import yaml
 
@@ -37,9 +37,72 @@ def load_yaml_file(yaml_file):
 
 
 
-def convert_yaml_to_json():
-    pass
+## find within a dictionary of nested dicts or list keys
+def findkeys(node, key_value) -> Generator:
+    ''' Generator to retrieve key values in a nested dicts with lists'''
+    if isinstance(node, list):
+        for elem in node:
+            for value in findkeys(elem, key_value):
+                yield value
 
+    elif isinstance(node, dict):
+        if key_value in node:
+            yield node[key_value]
+        for element in node.values():
+            for value in findkeys(element, key_value):
+                yield value
+
+
+def find_key_in_nested_dict(search_dict, field)-> list:            # Works, but is NAIVE as it returns a list type
+    """
+    Takes a dict with nested lists and dicts,
+    and searches all dicts for a key of the field
+    provided.
+    """
+    fields_found = []
+
+    for key, value in search_dict.items():
+
+        if key == field:
+            fields_found.append(value)
+
+        elif isinstance(value, dict):
+            results = find_key_in_nested_dict(value, field)
+            for result in results:
+                fields_found.append(result)
+
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    more_results = find_key_in_nested_dict(item, field)
+                    for another_result in more_results:
+                        fields_found.append(another_result)
+
+    return fields_found
+
+
+"""     NOT USED
+def get_management_id(id: int):
+    # GET request to query the management zone id from DynaTrace
+    GET_ID_URL = ZONE_URL + "/" + str(id)
+    params = {"Api-Token": API_TOKEN}
+    get_result = requests.get(
+            url=GET_ID_URL,
+            params=params
+            )
+    return get_result.json()
+
+
+def get_management_zones():
+    # GET request to list all the current management zones from DynaTrace
+    params = {"Api-Token": API_TOKEN}
+    get_result = requests.get(
+            url=ZONE_URL,
+            params=params
+            )
+    return get_result.json()
+
+"""
 
 
 if __name__ == '__main__':
