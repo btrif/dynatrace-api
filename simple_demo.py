@@ -2,24 +2,31 @@
 
 import requests
 import json
+import asyncio
 
 from datetime import datetime, timedelta
 import os
 
-# Environment Variables, secrets
-token_id = os.environ.get("token_id")
-token_secret = os.environ.get("token_secret")
-environment_id = os.environ.get("environment_id")
-print(f"environment_id : {environment_id}")
+from settings import ENVIRONMENT_ID, API_TOKEN
 
 
-api_token = token_id + "." + token_secret
-dynatrace_env_url = f"https://{environment_id}.live.dynatrace.com/"
+async def main2():
+    loop = asyncio.get_event_loop()
+    future1 = loop.run_in_executor(None, requests.get, 'http://www.google.com')
+    future2 = loop.run_in_executor(None, requests.get, 'http://www.google.co.uk')
+    response1 = await future1
+    response2 = await future2
+    print(response1.text)
+    print(response2.text)
+
+# async_req = asyncio.get_event_loop()
+# async_req.run_until_complete(main2())
+
 
 
 if __name__ == '__main__':
-    zone_url = "https://"+environment_id+".live.dynatrace.com/api/config/v1/managementZones"
-    params = {"Api-Token": api_token}
+    zone_url = "https://"+ENVIRONMENT_ID+".live.dynatrace.com/api/config/v1/managementZones"
+    params = {"Api-Token": API_TOKEN}
     get_mngmnt_res = requests.get(
             url=zone_url,
             params=params
@@ -27,14 +34,55 @@ if __name__ == '__main__':
     print('GET request: ')
     print(get_mngmnt_res.json())
 
-    print('request POST')
 
-    mngmt_data = {
-        "name": "bogdan-sample-encapsulation",
-        "description": "bogdan-test 4, 29.03.2023, 12:30 PM",
-        "rules": [],
+
+    zone_data1 = {
+       'name': 'global-pcf-a',
+        'description': 'global-pcf-a 31.03.2023 20:02',
+        'rules': [
+            {'type': 'PROCESS_GROUP', 'enabled': True,
+             'propagationTypes': ['PROCESS_GROUP_TO_SERVICE', 'PROCESS_GROUP_TO_HOST'],
+             'conditions': [
+                {'key': {'attribute': 'HOST_GROUP_NAME'},
+                 'comparisonInfo': {'type': 'STRING',
+                                    'operator': 'BEGINS_WITH',
+                                    'value': ['global-pcf-a-Z', 'global-pcf-a-Y'],
+                                    'negate': False,
+                                    'caseSensitive': True}
+                 }
+                 ]
+             }
+            ],
         "dimensionalRules": [],
         "entitySelectorBasedRules": []
+        }
+
+    zone_data2 = {
+        "name": "manual_entry_2",
+        "description": "31.032023 20:09",
+        "rules": [
+            {
+                "type": "SERVICE",
+                "enabled": True,
+                "propagationTypes": [
+                    "SERVICE_TO_HOST_LIKE"
+                    ],
+                "conditions": [
+                    {
+                        "key": {
+                            "attribute": "SERVICE_DATABASE_NAME"
+                            },
+                        "comparisonInfo": {
+                            "type": "STRING",
+                            "operator": "BEGINS_WITH",
+                            "value": "['global-pcf-a-Z', 'global-pcf-a-Y']",
+                            "negate": False,
+                            "caseSensitive": False
+                            }
+                        }
+                    ]
+                }
+            ]
         }
 
     headers = {'content-type': 'application/json'}
@@ -43,8 +91,19 @@ if __name__ == '__main__':
     post_request_result = requests.post(
             url=zone_url,
             params=params,
-            data=json.dumps(mngmt_data),
+            data=json.dumps(zone_data2),
             headers=headers
             )
 
     print(post_request_result.json())
+
+    # print('\nUPDATE request:')
+    # put_request = requests.put(
+    #         url=zone_url,
+    #         params=params,
+    #         data=json.dumps(mngmt_data),
+    #         headers=headers
+    #         )
+
+
+

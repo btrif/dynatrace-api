@@ -4,7 +4,7 @@
 import json
 import yaml
 
-def convert_yaml_to_json(yaml_file, json_file):
+def yaml_to_json_file(yaml_file, json_file):
 
     with open(yaml_file, 'r') as yaml_in, open(json_file, "w") as json_out:
         yaml_object = yaml.safe_load(yaml_in) # yaml_object will be a list or a dict
@@ -14,7 +14,7 @@ def convert_yaml_to_json(yaml_file, json_file):
             print(result_file.read())
 
 
-def convert_json_to_yaml(json_file, yaml_file):
+def json_to_yaml_file(json_file, yaml_file):
 
     with open(json_file, 'r') as json_in, open(yaml_file, "w") as yaml_out:
         json_obj = json.load(json_in)
@@ -23,16 +23,34 @@ def convert_json_to_yaml(json_file, yaml_file):
     with open(yaml_file, 'r') as result_file:
         print(result_file.read())
 
+def load_json_file(json_file):
+    with open(json_file, 'r') as json_in :
+        json_obj = json.load(json_in)
+    return json_obj
+
+def load_yaml_file(yaml_file):
+    with open(yaml_file, 'r') as yaml_in :
+        yaml_obj = yaml.safe_load(yaml_in)
+    return yaml_obj
 
 
+
+
+def convert_yaml_to_json():
+    pass
 
 
 
 if __name__ == '__main__':
 
-    yaml_file = "management_zones.yml"
-    json_file = "management_zones.json"
+    teams_yaml_input_file = str(input("Enter the name of the YML file: "))
+    TEAMS = load_yaml_file(teams_yaml_input_file)
+    json_file = "rules.json"
 
-    convert_yaml_to_json(yaml_file, json_file)
+    # yaml_to_json_file(yaml_file, json_file)
+    # json_to_yaml_file(json_file, "management_zones2.yml")
+    json1 = load_json_file(json_file)
+    print(json1)
 
-    convert_json_to_yaml(json_file, "management_zones2.yml")
+    yaml1 = load_yaml_file(teams_yaml_input_file)
+    print(yaml1)

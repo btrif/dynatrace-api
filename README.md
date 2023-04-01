@@ -3,11 +3,12 @@
 #     Push management Zones to DynaTrace via API
 
 ### STEPS
-1. a
-2. b
-3. c
-4. d
-5. e
-6. 
 
+1. Install requirements:
+
+```
+pip install -r requirements.txt
+```
+ 
+2. do following 
 

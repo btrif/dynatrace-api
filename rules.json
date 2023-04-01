@@ -1,0 +1,22 @@
+{
+    "type": "PROCESS_GROUP",
+    "enabled": true,
+    "propagationTypes": [
+        "PROCESS_GROUP_TO_SERVICE",
+        "PROCESS_GROUP_TO_HOST"
+    ],
+    "conditions": [
+        {
+            "key": {
+                "attribute": "HOST_GROUP_NAME"
+            },
+            "comparisonInfo": {
+                "type": "STRING",
+                "operator": "BEGINS_WITH",
+                "value": "<hostgroup-prefix>",
+                "negate": false,
+                "caseSensitive": true
+            }
+        }
+    ]
+}
